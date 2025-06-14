@@ -1,11 +1,11 @@
-import { Part } from "./part.enum";
-import { Team } from "./team.enum";
+import { PART_CODE_TYPE } from "./part.code";
+import { TEAM_CODE_TYPE } from "./team.code";
 
 export interface User {
   loginId: string;
   password: string;
   email: string;
-  part: Part;
+  part: PART_CODE_TYPE;
   username: string;
-  team: Team;
+  team: TEAM_CODE_TYPE;
 }
