@@ -1,4 +1,4 @@
-import { User } from "@/constants/user";
+import { User } from "@/types/user";
 import { API_URLS } from "./apiUrls";
 
 export const signup = async (user: User) => {

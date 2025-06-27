@@ -1,5 +1,5 @@
-import { PART_CODE_TYPE } from "./part.code";
-import { TEAM_CODE_TYPE } from "./team.code";
+import { PART_CODE_TYPE } from "../constants/part.code";
+import { TEAM_CODE_TYPE } from "../constants/team.code";
 
 export interface User {
   loginId: string;

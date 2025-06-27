@@ -2,16 +2,14 @@
 
 import Link from "next/link";
 import { PATH } from "@/constants/path";
-import { useAuth } from "@/hooks/useAuth";
-import { useLogout } from "@/hooks/useLogout";
 
 import SubmitButton from "@/components/SubmitButton";
 import Lottie from "@/components/Lottie";
 import VoteButton from "@/components/VoteButton";
+import { useUserStore } from "@/stores/useUserStore";
 
 export default function Home() {
-  const { isLoggedIn } = useAuth();
-  const logout = useLogout();
+  const { user, logout, isLoggedIn } = useUserStore();
 
   return (
     <div className="flex h-full flex-col justify-between">
@@ -28,7 +26,9 @@ export default function Home() {
       <div
         className={`font-headline-3 text-main self-center rounded-full bg-white px-6 py-2 ${isLoggedIn ? "text-main" : "text-pink"}`}
       >
-        {isLoggedIn ? "투표를 진행해주세요." : "로그인이 필요합니다."}
+        {isLoggedIn
+          ? `${user?.username}님 투표를 진행해주세요.`
+          : "로그인이 필요합니다."}
       </div>
 
       <div className="md:self-center">
