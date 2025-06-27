@@ -1,16 +1,57 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "@/components/Header";
+import { useState } from "react";
 
 const Result = () => {
-  const rankedTeams = [
-    "이어드림",
-    "인플루이",
-    "팝업사이클",
-    "프로메사",
-    "하니홈",
-  ];
+  const [rankedTeams, setRankedTeams] = useState<string[]>([]);
+  const accessToken = localStorage.getItem("accessToken");
+
+  const NEXT_PUBLIC_API_URLS = {
+    VoteItems: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/vote/DEMODAY/results`,
+  };
+
+  const fetchVoteItems = async () => {
+    const response = await fetch(NEXT_PUBLIC_API_URLS.VoteItems, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`서버 오류: ${response.status} - ${errorText}`);
+    }
+
+    const data = await response.json();
+
+    const sorted = data.result.sort(
+      (a: { voteCount: number }, b: { voteCount: number }) =>
+        b.voteCount - a.voteCount,
+    );
+
+    return sorted as {
+      voteItemId: number;
+      subject: string;
+      voteCount: number;
+    }[];
+  };
+
+  useEffect(() => {
+    const getVoteItems = async () => {
+      try {
+        const items = await fetchVoteItems();
+        setRankedTeams(items.map((item) => item.subject));
+      } catch (error) {
+        console.error("투표 결과를 불러오는 중 오류 발생:", error);
+      }
+    };
+    getVoteItems();
+  }, []);
 
   return (
     <div className="flex h-full flex-col text-black">

@@ -54,6 +54,7 @@ const Vote = () => {
 
   const [selected, setSelected] = useState<number | null>(null);
   const router = useRouter();
+  const accessToken = localStorage.getItem("accessToken");
 
   const submitVote = async () => {
     if (!selected) return;
@@ -61,7 +62,9 @@ const Vote = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
+      credentials: "include",
       body: JSON.stringify({ voteId: 1, voteItemId: selected }),
     });
     if (!response.ok) {
@@ -69,7 +72,7 @@ const Vote = () => {
       throw new Error(`투표 제출 오류: ${response.status} - ${errorText}`);
     }
     const data = await response.json();
-    if (data.success) {
+    if (data.isSuccess) {
       alert("투표가 성공적으로 제출되었습니다!");
       setSelected(null);
       router.replace("/demovote/result");
