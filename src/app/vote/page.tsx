@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-import Header from "../_components/Header";
+import Header from "@/components/Header";
 import SubmitButton from "@/components/SubmitButton";
 
 const Vote = () => {
