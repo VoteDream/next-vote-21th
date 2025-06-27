@@ -11,7 +11,7 @@ import { useSignup } from "@/hooks/useSignup";
 import { PATH } from "@/constants/path";
 import { MemberData, TEAM } from "@/constants/team";
 import { PartLabel, TeamLabel } from "@/constants/team.label";
-import { User } from "@/constants/user";
+import { User } from "@/types/user";
 import {
   validateLoginId,
   validateEmail,
@@ -85,7 +85,6 @@ const Register = () => {
       alert("유효한 이메일을 입력해주세요.");
       return;
     }
-
     signup(user as User);
   };
 
