@@ -80,8 +80,9 @@ const Vote = () => {
       body: JSON.stringify({ voteId: 1, voteItemId: selected }),
     });
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`투표 제출 오류: ${response.status} - ${errorText}`);
+      await response.text();
+      alert("이미 투표를 하셨습니다.");
+      router.replace("/vote/result");
     }
     const data = await response.json();
     if (data.isSuccess) {
@@ -126,14 +127,36 @@ const Vote = () => {
                     : "bg-white text-black hover:scale-[1.01] hover:bg-[#00AF8F] hover:text-white hover:shadow-lg"
                 }`}
               >
-                <div
-                  className={`font-semibold ${
-                    isActive
-                      ? "text-white"
-                      : "text-black group-hover:text-white"
-                  }`}
-                >
-                  {c.subject}
+                <div className="flex h-8 w-8 rounded-full bg-gray-200" />
+
+                <div className="flex flex-col">
+                  <div
+                    className={`font-semibold ${
+                      isActive
+                        ? "text-white"
+                        : "text-black group-hover:text-white"
+                    }`}
+                  >
+                    {c.subject}{" "}
+                    <span
+                      className={`text-xs text-gray-500 ${
+                        isActive
+                          ? "text-white"
+                          : "text-gray-500 group-hover:text-white"
+                      }`}
+                    >
+                      투표 0표
+                    </span>
+                  </div>
+                  <div
+                    className={`text-xs text-gray-500 ${
+                      isActive
+                        ? "text-white"
+                        : "text-gray-500 group-hover:text-white"
+                    }`}
+                  >
+                    그저그런 팀
+                  </div>
                 </div>
               </button>
             );

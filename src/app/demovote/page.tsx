@@ -68,8 +68,9 @@ const Vote = () => {
       body: JSON.stringify({ voteId: 1, voteItemId: selected }),
     });
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`투표 제출 오류: ${response.status} - ${errorText}`);
+      await response.text();
+      alert("이미 투표를 하셨습니다.");
+      router.replace("/demovote/result");
     }
     const data = await response.json();
     if (data.isSuccess) {
@@ -88,7 +89,6 @@ const Vote = () => {
   return (
     <div className="flex h-full flex-col text-black">
       <Header>데모데이 투표</Header>
-
       <div className="mx-auto box-border w-full max-w-[345px] rounded-full bg-white px-6 py-2 text-center text-[12px] font-semibold text-[#00AF8F] shadow-sm">
         CEOS 21기 데모데이 최고의 1팀을 투표해주세요.
       </div>

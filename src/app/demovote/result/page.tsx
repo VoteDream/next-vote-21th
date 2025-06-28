@@ -3,9 +3,19 @@
 import React, { useEffect } from "react";
 import Header from "@/components/Header";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+interface RankedTeam {
+  voteItemId: number;
+  subject: string;
+  voteCount: number;
+}
 
 const Result = () => {
-  const [rankedTeams, setRankedTeams] = useState<string[]>([]);
+  const [rankedTeams, setRankedTeams] = useState<RankedTeam[]>([]);
+  const [votesCount, setVotesCount] = useState<number>(0);
+
+  const router = useRouter();
   const accessToken = localStorage.getItem("accessToken");
 
   const NEXT_PUBLIC_API_URLS = {
@@ -45,7 +55,8 @@ const Result = () => {
     const getVoteItems = async () => {
       try {
         const items = await fetchVoteItems();
-        setRankedTeams(items.map((item) => item.subject));
+        setRankedTeams(items);
+        setVotesCount(items.reduce((sum, item) => sum + item.voteCount, 0));
       } catch (error) {
         console.error("투표 결과를 불러오는 중 오류 발생:", error);
       }
@@ -56,6 +67,10 @@ const Result = () => {
   return (
     <div className="flex h-full flex-col text-black">
       <Header>데모데이 투표</Header>
+      <button className="mb-5" onClick={() => router.replace("/vote")}>
+        파트장 투표로 가기
+      </button>
+
       <div className="mx-auto box-border w-full max-w-[345px] rounded-full bg-white px-6 py-2 text-center text-[12px] font-semibold text-[#00AF8F] shadow-sm">
         CEOS 21기 데모데이 최고의 1팀을 투표해주세요.
       </div>
@@ -66,7 +81,7 @@ const Result = () => {
 
           return (
             <div
-              key={name}
+              key={name.subject}
               className="mx-auto flex max-w-[350px] min-w-[280px] items-center gap-4"
             >
               <div
@@ -85,10 +100,18 @@ const Result = () => {
                     isFirst ? "text-black" : "text-gray-400"
                   }`}
                 >
-                  {name}
+                  {name.subject}
                 </div>
-
-                {isFirst && <div className="text-xl text-[#00AF8F]">👑</div>}
+                <div
+                  className={`text-sm font-semibold ${
+                    isFirst ? "text-[#00AF8F]" : "text-gray-400"
+                  }`}
+                >
+                  {name.voteCount}표
+                  <span className="mx-1 text-xs">
+                    득표율 {((name.voteCount / votesCount) * 100).toFixed(1)}%
+                  </span>
+                </div>{" "}
               </div>
             </div>
           );

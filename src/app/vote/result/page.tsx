@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import { useUserStore } from "@/stores/useUserStore";
+import { useRouter } from "next/navigation";
 
 interface Candidate {
   voteItemId: number;
@@ -13,6 +14,8 @@ interface Candidate {
 const Result = () => {
   const { user } = useUserStore();
   const [rankedCandidates, setRankedCandidates] = useState<Candidate[]>([]);
+  const router = useRouter();
+  const [votesCount, setVotesCount] = useState<number>(0);
 
   const NEXT_PUBLIC_API_URLS = {
     VoteItems: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/vote/PARTLEADER/results`,
@@ -58,6 +61,7 @@ const Result = () => {
         );
 
         setRankedCandidates(sorted);
+        setVotesCount(sorted.reduce((sum, item) => sum + item.voteCount, 0));
       } catch (error) {
         console.error("투표 결과를 불러오는 중 오류 발생:", error);
         setRankedCandidates([]);
@@ -77,6 +81,9 @@ const Result = () => {
   return (
     <div className="flex h-full flex-col text-black">
       <Header>파트장 투표 결과</Header>
+      <button className="mb-5" onClick={() => router.replace("/demovote")}>
+        데모데이 투표로 가기
+      </button>
 
       <div className="mx-auto box-border w-full max-w-[345px] rounded-full bg-white px-6 py-2 text-center text-[12px] font-semibold text-[#00AF8F] shadow-sm">
         CEOS 22기 {partLabel} 파트장 투표 결과입니다.
@@ -102,6 +109,16 @@ const Result = () => {
                 </div>
                 <div className="flex flex-1 items-center justify-between rounded-[10px] bg-white p-4 shadow-sm">
                   <div className="font-semibold text-black">{c.subject}</div>
+                  <div
+                    className={`text-sm font-semibold ${
+                      isFirst ? "text-[#00AF8F]" : "text-gray-400"
+                    }`}
+                  >
+                    {c.voteCount}표
+                    <span className="mx-1 text-xs">
+                      득표율 {((c.voteCount / votesCount) * 100).toFixed(1)}%
+                    </span>
+                  </div>{" "}
                   {isFirst && <div className="text-xl text-[#00AF8F]">👑</div>}
                 </div>
               </div>
