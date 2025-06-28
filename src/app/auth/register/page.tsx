@@ -10,7 +10,7 @@ import SubmitButton from "@/components/SubmitButton";
 import { useSignup } from "@/hooks/useSignup";
 import { PATH } from "@/constants/path";
 import { MemberData, TEAM } from "@/constants/team";
-import { PartLabel, TeamLabel } from "@/constants/team.label";
+import { PART_LABEL, TEAM_LABEL } from "@/constants/team.label";
 import { User } from "@/types/user";
 import {
   validateLoginId,
@@ -152,7 +152,7 @@ const Register = () => {
                 className="font-headline-1 border-b-gray100 w-full py-[7px] outline-0"
               >
                 <option value="">팀 선택</option>
-                {Object.entries(TeamLabel).map(([code, label]) => (
+                {Object.entries(TEAM_LABEL).map(([code, label]) => (
                   <option key={code} value={code}>
                     {label}
                   </option>
@@ -175,7 +175,7 @@ const Register = () => {
                       key={member.name}
                       value={`${member.part}/${member.name}`}
                     >
-                      {`${PartLabel[member.part]}/${member.name}`}
+                      {`${PART_LABEL[member.part]}/${member.name}`}
                     </option>
                   ))}
               </select>
