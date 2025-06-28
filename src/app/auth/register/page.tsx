@@ -29,7 +29,12 @@ const Register = () => {
     username: "",
   });
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [teamMember, setTeamMember] = useState<MemberData[]>([]);
+
+  useEffect(() => {
+    if (errorMessage) setErrorMessage("");
+  }, [user.loginId, user.email]);
 
   const handleChange = (
     e:
@@ -49,9 +54,9 @@ const Register = () => {
     }
   };
 
-  const [isValidId, idMsg] = validateLoginId(user.loginId);
+  const [isValidId, idMsg] = validateLoginId(user.loginId, errorMessage);
   const [isValidPassword, passwordMsg] = validatePassword(user.password);
-  const [isValidEmail, emailMsg] = validateEmail(user.email);
+  const [isValidEmail, emailMsg] = validateEmail(user.email, errorMessage);
 
   useEffect(() => {
     //team이 정해지면
@@ -85,7 +90,16 @@ const Register = () => {
       alert("유효한 이메일을 입력해주세요.");
       return;
     }
-    signup(user as User);
+    signup(user as User, {
+      onError: (error: unknown) => {
+        if (error instanceof Error) {
+          console.log(error.message);
+          setErrorMessage(error.message);
+        } else {
+          console.error("회원가입 실패 ❌ 알 수 없는 에러 발생");
+        }
+      },
+    });
   };
 
   return (
