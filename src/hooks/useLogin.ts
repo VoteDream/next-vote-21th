@@ -13,7 +13,7 @@ export const useLogin = () => {
       console.log("로그인 성공 ✅");
       const { user, accessToken } = data.result;
       setUser({ ...user, accessToken });
-      localStorage.setItem("accessToken", accessToken);
+      // localStorage.setItem("accessToken", accessToken);
       router.push("/");
     },
   });

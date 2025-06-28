@@ -21,7 +21,7 @@ const Result = () => {
   const [rankedTeams, setRankedTeams] = useState<RankedTeam[]>([]);
   const [votesCount, setVotesCount] = useState<number>(0);
 
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = user?.accessToken; // localStorage.getItem("accessToken");
 
   const NEXT_PUBLIC_API_URLS = {
     VoteItems: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/vote/DEMODAY/results`,
