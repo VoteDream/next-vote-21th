@@ -84,7 +84,8 @@ const Vote = () => {
   }, [user]);
 
   const router = useRouter();
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = user?.accessToken;
+  // localStorage.getItem("accessToken");
 
   const submitVote = async () => {
     if (!selected) return;

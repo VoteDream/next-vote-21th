@@ -6,6 +6,7 @@ import SubmitButton from "@/components/SubmitButton";
 import { useRouter } from "next/navigation";
 import { TEAM_LABEL } from "@/constants/team.label";
 import { TEAM_CODE_TYPE } from "@/constants/team.code";
+import { useUserStore } from "@/stores/useUserStore";
 
 interface VoteItem {
   voteItemId: number;
@@ -14,6 +15,7 @@ interface VoteItem {
 }
 
 const Vote = () => {
+  const { user } = useUserStore();
   const [rankedTeams, setRankedTeams] = useState<VoteItem[]>([]);
 
   const NEXT_PUBLIC_API_URLS = {
@@ -58,7 +60,8 @@ const Vote = () => {
 
   const [selected, setSelected] = useState<number | null>(null);
   const router = useRouter();
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = user?.accessToken;
+  // localStorage.getItem("accessToken");
 
   const submitVote = async () => {
     if (!selected) return;
