@@ -90,7 +90,8 @@ const Result = () => {
       <div className="flex flex-1 flex-col justify-between p-8">
         <div className="flex flex-col gap-3 p-4">
           {rankedCandidates.map((c, index) => {
-            const isFirst = index === 0;
+            const isFirst =
+              index === 0 || c.voteCount === rankedCandidates[0].voteCount;
             return (
               <div
                 key={c.voteItemId}
@@ -103,7 +104,7 @@ const Result = () => {
                       : "border-gray-200 bg-gray-100 text-gray-500"
                   }`}
                 >
-                  {index + 1}
+                  {isFirst ? 1 : index + 1}
                 </div>
                 <div className="flex flex-1 items-center justify-between rounded-[10px] bg-white p-4 shadow-sm">
                   <div className="flex items-center pb-1.5">

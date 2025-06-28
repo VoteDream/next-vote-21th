@@ -77,7 +77,8 @@ const Result = () => {
 
       <div className="flex flex-col gap-3 p-8">
         {rankedTeams.map((name, index) => {
-          const isFirst = index === 0;
+          const isFirst =
+            index === 0 || rankedTeams[0].voteCount === name.voteCount;
 
           return (
             <div
@@ -91,7 +92,7 @@ const Result = () => {
                     : "border-gray-200 bg-gray-100 text-gray-500"
                 }`}
               >
-                {index + 1}
+                {isFirst ? 1 : index + 1}
               </div>
 
               <div className="flex flex-1 items-center justify-between rounded-[10px] bg-white px-4 py-6 shadow-sm">
