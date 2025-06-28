@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 interface VoteItem {
   voteItemId: number;
   subject: string;
+  voteCount: number;
 }
 
 const Vote = () => {
@@ -16,6 +17,23 @@ const Vote = () => {
   const NEXT_PUBLIC_API_URLS = {
     VoteItems: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/vote/DEMODAY/items`,
     Vote: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/vote/DEMODAY/vote`,
+  };
+
+  const TeamFormat = (teamid: string) => {
+    switch (teamid) {
+      case "POPUPCYCLE":
+        return "팝업사이클";
+      case "INFLUEE":
+        return "인플루이";
+      case "PROMETHA":
+        return "프로메사";
+      case "HONEYHOME":
+        return "하니홈";
+      case "DEARDREAM":
+        return "하니홈";
+      default:
+        return "알 수 없는 팀";
+    }
   };
 
   const fetchVoteItems = async () => {
@@ -37,6 +55,7 @@ const Vote = () => {
     return data.result as {
       voteItemId: number;
       subject: string;
+      voteCount: number;
     }[];
   };
   useEffect(() => {
@@ -114,7 +133,16 @@ const Vote = () => {
                     : "bg-white text-black hover:bg-[#00AF8F] hover:text-white hover:shadow-md"
                 }`}
               >
-                {item.subject}
+                {TeamFormat(item.subject)}
+                <span
+                  className={`mx-1 text-xs text-gray-500 ${
+                    isActive
+                      ? "text-white"
+                      : "text-gray-500 group-hover:text-white"
+                  }`}
+                >
+                  투표 {item.voteCount}표
+                </span>
               </button>
             );
           })}

@@ -9,12 +9,31 @@ import { useRouter } from "next/navigation";
 interface Candidate {
   subject: string;
   voteItemId: number;
+  teamId: number;
+  voteCount: number;
 }
 
 const Vote = () => {
   const { user } = useUserStore();
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [selected, setSelected] = useState<number | null>(null);
+
+  const teamFormat = (teamid: number) => {
+    switch (teamid) {
+      case 5:
+        return "프로메사";
+      case 4:
+        return "인플루이";
+      case 3:
+        return "이어드림";
+      case 2:
+        return "팝업사이클";
+      case 1:
+        return "하니홈";
+      default:
+        return "알 수 없는 팀";
+    }
+  };
 
   const NEXT_PUBLIC_API_URLS = {
     VoteItems: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/vote/PARTLEADER/items`,
@@ -145,7 +164,7 @@ const Vote = () => {
                           : "text-gray-500 group-hover:text-white"
                       }`}
                     >
-                      투표 0표
+                      투표 {c.voteCount}표
                     </span>
                   </div>
                   <div
@@ -155,7 +174,7 @@ const Vote = () => {
                         : "text-gray-500 group-hover:text-white"
                     }`}
                   >
-                    그저그런 팀
+                    {teamFormat(c.teamId)}
                   </div>
                 </div>
               </button>

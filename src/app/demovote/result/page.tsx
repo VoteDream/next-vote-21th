@@ -22,6 +22,23 @@ const Result = () => {
     VoteItems: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/vote/DEMODAY/results`,
   };
 
+  const TeamFormat = (teamid: string) => {
+    switch (teamid) {
+      case "POPUPCYCLE":
+        return "팝업사이클";
+      case "INFLUEE":
+        return "인플루이";
+      case "PROMETHA":
+        return "프로메사";
+      case "HONEYHOME":
+        return "하니홈";
+      case "DEARDREAM":
+        return "하니홈";
+      default:
+        return "알 수 없는 팀";
+    }
+  };
+
   const fetchVoteItems = async () => {
     const response = await fetch(NEXT_PUBLIC_API_URLS.VoteItems, {
       method: "GET",
@@ -100,7 +117,7 @@ const Result = () => {
                     isFirst ? "text-black" : "text-gray-400"
                   }`}
                 >
-                  {name.subject}
+                  {TeamFormat(name.subject)}
                 </div>
                 <div
                   className={`text-sm font-semibold ${
