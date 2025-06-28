@@ -53,6 +53,9 @@
   .bg-gray50 {
     background-color: var(--color-gray50);
   }
+  .bg-pink {
+    background-color: var(--color-pink);
+  }
 
   .border-home-btn {
     border: 1px solid rgba(237, 239, 243, 1);

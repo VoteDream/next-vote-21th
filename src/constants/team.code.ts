@@ -1,0 +1,9 @@
+export const TEAM_CODE = {
+  DEARDREAM: "DEARDREAM",
+  INFLUEE: "INFLUEE",
+  POPUPCYCLE: "POPUPCYCLE",
+  PROMETHA: "PROMETHA",
+  HONEYHOME: "HONEYHOME",
+} as const;
+
+export type TEAM_CODE_TYPE = keyof typeof TEAM_CODE;

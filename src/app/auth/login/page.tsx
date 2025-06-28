@@ -8,6 +8,7 @@ import { useLogin } from "@/hooks/useLogin";
 import Header from "../_components/Header";
 import InputFieldWithFeedback from "../_components/InputFieldWithFeedback";
 import SubmitButton from "@/components/SubmitButton";
+import { ERROR_MESSAGE } from "@/constants/error-message";
 
 const Login = () => {
   const [loginId, setLoginId] = useState("");
@@ -19,11 +20,10 @@ const Login = () => {
   });
 
   useEffect(() => {
-    console.log(errorMessage);
-    if (errorMessage === "해당 유저를 찾을 수 없습니다.")
+    if (errorMessage === ERROR_MESSAGE.ID_INVALID)
       return setErrorState({ isUserIdValid: false, isPasswordValid: true });
 
-    if (errorMessage === "패스워드가 일치하지 않습니다.")
+    if (errorMessage === ERROR_MESSAGE.PASSWORD_INVALID)
       return setErrorState({ isUserIdValid: true, isPasswordValid: false });
   }, [errorMessage]);
 
@@ -64,11 +64,7 @@ const Login = () => {
             value={loginId}
             onChange={(e) => setLoginId(e.target.value)}
             isValid={errorState.isUserIdValid}
-            message={
-              errorState.isUserIdValid
-                ? ""
-                : "아이디와 일치하는 계정이 존재하지 않습니다."
-            }
+            message={errorState.isUserIdValid ? "" : errorMessage}
           />
 
           <InputFieldWithFeedback
@@ -79,9 +75,7 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             isValid={errorState.isPasswordValid}
-            message={
-              errorState.isPasswordValid ? " " : "비밀번호가 일치하지 않습니다."
-            }
+            message={errorState.isPasswordValid ? " " : errorMessage}
           />
 
           <Link href={PATH.REGISTER} className="self-end px-4">
