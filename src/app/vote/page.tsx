@@ -141,7 +141,7 @@ const Vote = () => {
                 type="button"
                 key={c.voteItemId}
                 onClick={() => handleSelect(c.voteItemId)}
-                className={`group flex h-[66px] max-w-[345px] flex-row items-center gap-2 rounded-[4px] p-4 shadow transition duration-200 ease-in-out ${
+                className={`group flex max-w-[345px] flex-row items-center gap-2 rounded-[4px] p-4 shadow transition duration-200 ease-in-out ${
                   isActive
                     ? "scale-[1.01] bg-[#00AF8F] text-white shadow-lg"
                     : "bg-white text-black hover:scale-[1.01] hover:bg-[#00AF8F] hover:text-white hover:shadow-lg"
@@ -159,7 +159,7 @@ const Vote = () => {
                   >
                     {c.subject}{" "}
                     <span
-                      className={`text-xs text-gray-500 ${
+                      className={`text-xs whitespace-nowrap text-gray-500 ${
                         isActive
                           ? "text-white"
                           : "text-gray-500 group-hover:text-white"
