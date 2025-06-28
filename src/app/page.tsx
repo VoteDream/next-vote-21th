@@ -13,12 +13,6 @@ export default function Home() {
 
   return (
     <div className="flex h-full flex-col justify-between">
-      <Link href={PATH.HOME}>
-        <header className="font-headline-1 border-b-gray100 p-4">
-          🗳️ 투표드림
-        </header>
-      </Link>
-
       <div className="w-full max-w-3xl self-center">
         <Lottie />
       </div>
