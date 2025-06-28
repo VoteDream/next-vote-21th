@@ -3,9 +3,11 @@
 import React, { useEffect } from "react";
 import Header from "@/components/Header";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { TEAM_LABEL } from "@/constants/team.label";
 import { TEAM_CODE_TYPE } from "@/constants/team.code";
+import Link from "next/link";
+import SubmitButton from "@/components/SubmitButton";
+import { PATH } from "@/constants/path";
 
 interface RankedTeam {
   voteItemId: number;
@@ -17,7 +19,6 @@ const Result = () => {
   const [rankedTeams, setRankedTeams] = useState<RankedTeam[]>([]);
   const [votesCount, setVotesCount] = useState<number>(0);
 
-  const router = useRouter();
   const accessToken = localStorage.getItem("accessToken");
 
   const NEXT_PUBLIC_API_URLS = {
@@ -69,9 +70,6 @@ const Result = () => {
   return (
     <div className="flex h-full flex-col text-black">
       <Header>데모데이 투표</Header>
-      <button className="mb-5" onClick={() => router.replace("/vote")}>
-        파트장 투표로 가기
-      </button>
 
       <div className="mx-auto box-border w-full max-w-[345px] rounded-full bg-white px-6 py-2 text-center text-[12px] font-semibold text-[#00AF8F] shadow-sm">
         CEOS 21기 데모데이 최고의 1팀을 투표해주세요.
@@ -119,6 +117,9 @@ const Result = () => {
           );
         })}
       </div>
+      <Link href={PATH.VOTE}>
+        <SubmitButton isActive={true}>데모데이 투표로 가기</SubmitButton>
+      </Link>
     </div>
   );
 };
