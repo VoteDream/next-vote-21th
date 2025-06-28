@@ -33,7 +33,7 @@ export default function RootLayout({
         className={`${layout} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-          <div className="h-dvh overflow-auto bg-[#F6F8FA]">
+          <div className="flex h-dvh flex-col overflow-auto bg-[#F6F8FA]">
             <LogoHeader />
             {children}
           </div>
