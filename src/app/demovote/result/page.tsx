@@ -3,7 +3,12 @@
 import React, { useEffect } from "react";
 import Header from "@/components/Header";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { TEAM_LABEL } from "@/constants/team.label";
+import { TEAM_CODE_TYPE } from "@/constants/team.code";
+import Link from "next/link";
+import SubmitButton from "@/components/SubmitButton";
+import { PATH } from "@/constants/path";
+import { useUserStore } from "@/stores/useUserStore";
 
 interface RankedTeam {
   voteItemId: number;
@@ -12,31 +17,14 @@ interface RankedTeam {
 }
 
 const Result = () => {
+  const { user } = useUserStore();
   const [rankedTeams, setRankedTeams] = useState<RankedTeam[]>([]);
   const [votesCount, setVotesCount] = useState<number>(0);
 
-  const router = useRouter();
   const accessToken = localStorage.getItem("accessToken");
 
   const NEXT_PUBLIC_API_URLS = {
     VoteItems: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/vote/DEMODAY/results`,
-  };
-
-  const TeamFormat = (teamid: string) => {
-    switch (teamid) {
-      case "POPUPCYCLE":
-        return "팝업사이클";
-      case "INFLUEE":
-        return "인플루이";
-      case "PROMETHA":
-        return "프로메사";
-      case "HONEYHOME":
-        return "하니홈";
-      case "DEARDREAM":
-        return "하니홈";
-      default:
-        return "알 수 없는 팀";
-    }
   };
 
   const fetchVoteItems = async () => {
@@ -84,9 +72,6 @@ const Result = () => {
   return (
     <div className="flex h-full flex-col text-black">
       <Header>데모데이 투표</Header>
-      <button className="mb-5" onClick={() => router.replace("/vote")}>
-        파트장 투표로 가기
-      </button>
 
       <div className="mx-auto box-border w-full max-w-[345px] rounded-full bg-white px-6 py-2 text-center text-[12px] font-semibold text-[#00AF8F] shadow-sm">
         CEOS 21기 데모데이 최고의 1팀을 투표해주세요.
@@ -94,7 +79,8 @@ const Result = () => {
 
       <div className="flex flex-col gap-3 p-8">
         {rankedTeams.map((name, index) => {
-          const isFirst = index === 0;
+          const isFirst =
+            index === 0 || rankedTeams[0].voteCount === name.voteCount;
 
           return (
             <div
@@ -108,7 +94,7 @@ const Result = () => {
                     : "border-gray-200 bg-gray-100 text-gray-500"
                 }`}
               >
-                {index + 1}
+                {isFirst ? 1 : index + 1}
               </div>
 
               <div className="flex flex-1 items-center justify-between rounded-[10px] bg-white px-4 py-6 shadow-sm">
@@ -117,7 +103,7 @@ const Result = () => {
                     isFirst ? "text-black" : "text-gray-400"
                   }`}
                 >
-                  {TeamFormat(name.subject)}
+                  {TEAM_LABEL[name.subject as TEAM_CODE_TYPE]}
                 </div>
                 <div
                   className={`text-sm font-semibold ${
@@ -134,6 +120,15 @@ const Result = () => {
           );
         })}
       </div>
+      {user?.isLeaderVoted ? (
+        <Link href={PATH.LEADER_RESULT}>
+          <SubmitButton isActive={true}>파트장 결과보러 가기</SubmitButton>
+        </Link>
+      ) : (
+        <Link href={PATH.VOTE}>
+          <SubmitButton isActive={true}>파트장 투표하러 가기</SubmitButton>
+        </Link>
+      )}
     </div>
   );
 };

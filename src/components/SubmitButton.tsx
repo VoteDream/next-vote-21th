@@ -1,11 +1,17 @@
 const SubmitButton = ({
   isActive,
+  isPink,
   children,
 }: {
   isActive: boolean;
+  isPink?: boolean;
   children: React.ReactNode;
 }) => {
-  const style = isActive ? "bg-main cursor-pointer" : "bg-gray1";
+  const style = isActive
+    ? isPink
+      ? "bg-pink cursor-pointer"
+      : "bg-main cursor-pointer"
+    : "bg-gray1";
   return (
     <div className="mx-4 my-6">
       <button

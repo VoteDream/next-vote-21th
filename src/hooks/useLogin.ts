@@ -11,7 +11,6 @@ export const useLogin = () => {
     mutationFn: login,
     onSuccess: (data) => {
       console.log("로그인 성공 ✅");
-      console.log("응답 코드:", data.code);
       const { user, accessToken } = data.result;
       setUser({ ...user, accessToken });
       localStorage.setItem("accessToken", accessToken);

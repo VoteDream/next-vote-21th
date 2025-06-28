@@ -96,7 +96,7 @@ const Vote = () => {
         Authorization: `Bearer ${accessToken}`,
       },
       credentials: "include",
-      body: JSON.stringify({ voteId: 1, voteItemId: selected }),
+      body: JSON.stringify({ voteId: 2, voteItemId: selected }),
     });
     if (!response.ok) {
       await response.text();

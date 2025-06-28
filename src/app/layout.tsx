@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Providers from "./providers";
 import "@/styles/globals.css";
+import LogoHeader from "@/components/LogoHeader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,10 @@ export default function RootLayout({
         className={`${layout} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-          <div className="h-full overflow-auto bg-[#F6F8FA]">{children}</div>
+          <div className="flex h-dvh flex-col overflow-auto bg-[#F6F8FA]">
+            <LogoHeader />
+            {children}
+          </div>
         </Providers>
       </body>
     </html>
