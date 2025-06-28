@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import SubmitButton from "@/components/SubmitButton";
 import { useRouter } from "next/navigation";
+import { TEAM_LABEL } from "@/constants/team.label";
+import { TEAM_CODE_TYPE } from "@/constants/team.code";
 
 interface VoteItem {
   voteItemId: number;
@@ -17,23 +19,6 @@ const Vote = () => {
   const NEXT_PUBLIC_API_URLS = {
     VoteItems: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/vote/DEMODAY/items`,
     Vote: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/vote/DEMODAY/vote`,
-  };
-
-  const TeamFormat = (teamid: string) => {
-    switch (teamid) {
-      case "POPUPCYCLE":
-        return "팝업사이클";
-      case "INFLUEE":
-        return "인플루이";
-      case "PROMETHA":
-        return "프로메사";
-      case "HONEYHOME":
-        return "하니홈";
-      case "DEARDREAM":
-        return "하니홈";
-      default:
-        return "알 수 없는 팀";
-    }
   };
 
   const fetchVoteItems = async () => {
@@ -133,7 +118,7 @@ const Vote = () => {
                     : "bg-white text-black hover:bg-[#00AF8F] hover:text-white hover:shadow-md"
                 }`}
               >
-                {TeamFormat(item.subject)}
+                {TEAM_LABEL[item.subject as TEAM_CODE_TYPE]}
                 <span
                   className={`mx-1 text-xs text-gray-500 ${
                     isActive

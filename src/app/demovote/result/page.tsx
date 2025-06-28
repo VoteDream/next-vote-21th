@@ -4,6 +4,8 @@ import React, { useEffect } from "react";
 import Header from "@/components/Header";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { TEAM_LABEL } from "@/constants/team.label";
+import { TEAM_CODE_TYPE } from "@/constants/team.code";
 
 interface RankedTeam {
   voteItemId: number;
@@ -20,23 +22,6 @@ const Result = () => {
 
   const NEXT_PUBLIC_API_URLS = {
     VoteItems: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/vote/DEMODAY/results`,
-  };
-
-  const TeamFormat = (teamid: string) => {
-    switch (teamid) {
-      case "POPUPCYCLE":
-        return "팝업사이클";
-      case "INFLUEE":
-        return "인플루이";
-      case "PROMETHA":
-        return "프로메사";
-      case "HONEYHOME":
-        return "하니홈";
-      case "DEARDREAM":
-        return "하니홈";
-      default:
-        return "알 수 없는 팀";
-    }
   };
 
   const fetchVoteItems = async () => {
@@ -117,7 +102,7 @@ const Result = () => {
                     isFirst ? "text-black" : "text-gray-400"
                   }`}
                 >
-                  {TeamFormat(name.subject)}
+                  {TEAM_LABEL[name.subject as TEAM_CODE_TYPE]}
                 </div>
                 <div
                   className={`text-sm font-semibold ${
