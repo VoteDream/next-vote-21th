@@ -128,9 +128,15 @@ const Result = () => {
             );
           })}
         </div>
-        <Link href={PATH.DEMOVOTE}>
-          <SubmitButton isActive={true}>데모데이 투표로 가기</SubmitButton>
-        </Link>
+        {user?.isLeaderVoted ? (
+          <Link href={PATH.DEMO_RESULT}>
+            <SubmitButton isActive={true}>데모데이 결과보러 가기</SubmitButton>
+          </Link>
+        ) : (
+          <Link href={PATH.DEMOVOTE}>
+            <SubmitButton isActive={true}>데모데이 투표하러 가기</SubmitButton>
+          </Link>
+        )}
       </div>
     </div>
   );

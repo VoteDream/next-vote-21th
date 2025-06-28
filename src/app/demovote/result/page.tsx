@@ -8,6 +8,7 @@ import { TEAM_CODE_TYPE } from "@/constants/team.code";
 import Link from "next/link";
 import SubmitButton from "@/components/SubmitButton";
 import { PATH } from "@/constants/path";
+import { useUserStore } from "@/stores/useUserStore";
 
 interface RankedTeam {
   voteItemId: number;
@@ -16,6 +17,7 @@ interface RankedTeam {
 }
 
 const Result = () => {
+  const { user } = useUserStore();
   const [rankedTeams, setRankedTeams] = useState<RankedTeam[]>([]);
   const [votesCount, setVotesCount] = useState<number>(0);
 
@@ -118,9 +120,15 @@ const Result = () => {
           );
         })}
       </div>
-      <Link href={PATH.VOTE}>
-        <SubmitButton isActive={true}>데모데이 투표로 가기</SubmitButton>
-      </Link>
+      {user?.isLeaderVoted ? (
+        <Link href={PATH.LEADER_RESULT}>
+          <SubmitButton isActive={true}>파트장 결과보러 가기</SubmitButton>
+        </Link>
+      ) : (
+        <Link href={PATH.VOTE}>
+          <SubmitButton isActive={true}>파트장 투표하러 가기</SubmitButton>
+        </Link>
+      )}
     </div>
   );
 };
