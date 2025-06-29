@@ -67,15 +67,15 @@ const Vote = () => {
         const index =
           user.part === "FRONTEND" ? 1 : user.part === "BACKEND" ? 0 : -1;
 
-        if (index === -1) {
-          console.warn("알 수 없는 파트 코드:", user.part);
-          return;
-        }
+        // if (index === -1) {
+        //   console.warn("알 수 없는 파트 코드:", user.part);
+        //   return;
+        // }
 
         const myCandidates = items[index];
         setCandidates(Array.isArray(myCandidates) ? myCandidates : []);
-      } catch (error) {
-        console.error("투표 항목을 불러오는 중 오류 발생:", error);
+      } catch {
+        // console.error("투표 항목을 불러오는 중 오류 발생:", error);
         setCandidates([]); // fallback
       }
     };
@@ -89,7 +89,6 @@ const Vote = () => {
 
   const submitVote = async () => {
     if (!selected) return;
-    console.log("선택된 후보:", selected);
     const response = await fetch(NEXT_PUBLIC_API_URLS.Vote, {
       method: "POST",
       headers: {

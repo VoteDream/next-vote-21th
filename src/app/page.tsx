@@ -18,9 +18,7 @@ export default function Home() {
     const fetchData = async () => {
       try {
         await fetchVoteStatus();
-      } catch (error) {
-        console.error("가져오기 실패 ❌", error);
-      }
+      } catch {}
     };
 
     fetchData();

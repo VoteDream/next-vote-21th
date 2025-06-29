@@ -10,7 +10,6 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      console.log("로그인 성공 ✅");
       const { user, accessToken } = data.result;
       setUser({ ...user, accessToken });
       // localStorage.setItem("accessToken", accessToken);
