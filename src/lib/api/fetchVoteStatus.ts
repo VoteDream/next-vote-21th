@@ -26,7 +26,5 @@ export const fetchVoteStatus = async () => {
       isDemoVoted: demoData.result.voted,
       isLeaderVoted: leaderData.result.voted,
     });
-  } catch (error) {
-    console.error("API 에러 ❌", error);
-  }
+  } catch {}
 };

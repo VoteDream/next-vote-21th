@@ -50,9 +50,7 @@ const Vote = () => {
       try {
         const items = await fetchVoteItems();
         setRankedTeams(items);
-      } catch (error) {
-        console.error("투표 항목을 불러오는 중 오류 발생:", error);
-      }
+      } catch {}
     };
 
     getVoteItems();

@@ -62,9 +62,7 @@ const Result = () => {
         const items = await fetchVoteItems();
         setRankedTeams(items);
         setVotesCount(items.reduce((sum, item) => sum + item.voteCount, 0));
-      } catch (error) {
-        console.error("투표 결과를 불러오는 중 오류 발생:", error);
-      }
+      } catch {}
     };
     getVoteItems();
   }, []);

@@ -93,10 +93,7 @@ const Register = () => {
     signup(user as User, {
       onError: (error: unknown) => {
         if (error instanceof Error) {
-          console.log(error.message);
           setErrorMessage(error.message);
-        } else {
-          console.error("회원가입 실패 ❌ 알 수 없는 에러 발생");
         }
       },
     });

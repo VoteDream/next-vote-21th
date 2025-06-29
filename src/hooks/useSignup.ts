@@ -8,9 +8,7 @@ export const useSignup = () => {
 
   return useMutation({
     mutationFn: signup,
-    onSuccess: (data) => {
-      console.log("회원가입 성공 ✅");
-      console.log("응답 메시지:", data.message);
+    onSuccess: () => {
       router.push(PATH.LOGIN);
     },
   });

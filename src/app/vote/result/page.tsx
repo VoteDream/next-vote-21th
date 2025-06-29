@@ -50,7 +50,7 @@ const Result = () => {
           user.part === "FRONTEND" ? 1 : user.part === "BACKEND" ? 0 : -1;
 
         if (index === -1) {
-          console.warn("NONE 파트는 결과 대상이 아닙니다.");
+          // console.warn("NONE 파트는 결과 대상이 아닙니다.");
           setRankedCandidates([]);
           return;
         }
@@ -63,8 +63,8 @@ const Result = () => {
 
         setRankedCandidates(sorted);
         setVotesCount(sorted.reduce((sum, item) => sum + item.voteCount, 0));
-      } catch (error) {
-        console.error("투표 결과를 불러오는 중 오류 발생:", error);
+      } catch {
+        // console.error("투표 결과를 불러오는 중 오류 발생:", error);
         setRankedCandidates([]);
       }
     };
