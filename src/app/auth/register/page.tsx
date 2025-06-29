@@ -190,6 +190,11 @@ const Register = () => {
                     </option>
                   ))}
               </select>
+              {errorMessage === "중복된 사용자 이름입니다." && (
+                <small className="text-pink break-keep">
+                  이미 가입한 사용자 입니다. 관리자에게 문의해주세요.
+                </small>
+              )}
             </div>
           </div>
         </div>
